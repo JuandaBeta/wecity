@@ -1,0 +1,458 @@
+---
+import '../styles/global.css';
+import Navbar       from '../components/Navbar.astro';
+import About        from '../components/About.astro';
+import Hero         from '../components/Hero.astro';
+import Approach     from '../components/Approach.astro';
+import Keynotes     from '../components/Keynotes.astro';
+import Stakeholders from '../components/Stakeholders.astro';
+import Projects     from '../components/Projects.astro';
+import Partners     from '../components/Partners.astro';
+import CTA          from '../components/CTA.astro';
+import Stats        from '../components/Stats.astro';
+import Contact      from '../components/Contact.astro';
+import Footer       from '../components/Footer.astro';
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark" data-lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#070808" />
+
+    <title>WECITY — Living Urban Ecosystems</title>
+    <meta name="description"
+      content="WECITY connects companies, universities, governments, and citizens to co-create and implement projects." />
+
+    <link rel="icon" type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23070808'/><text y='75' x='8' font-size='58' font-family='Georgia,serif' font-style='italic' font-weight='600' fill='%23A6E03A'>W</text></svg>" />
+
+    <script is:inline>
+      (function() {
+        var saved = localStorage.getItem('wecity-theme');
+        var preferred = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', saved || preferred);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#approach">Skip to main content</a>
+    <Navbar />
+    <main>
+      <Hero />
+      <About />
+      <Approach />
+      <Keynotes />
+      <Stakeholders />
+      <Projects />
+      <Partners />
+      <CTA />
+      <Stats />
+      <Contact />
+    </main>
+    <Footer />
+
+    <script>
+      // --- Animaciones de Scroll ---
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+    <script>
+      // --- Sistema de Traducción con TypeScript Seguro ---
+      
+      type Lang = 'en' | 'es';
+
+      const translations = {
+  en: {
+    // Navbar
+    "nav.about":       "About",
+    "nav.approach":    "Our Approach",
+    "nav.keynotes":    "Learn How",
+    "nav.stakeholders":"Ecosystem",
+    "nav.projects":    "Projects",
+    "nav.stats":       "Impact",
+    "nav.contact":     "Contact",
+
+    // Hero
+    "hero.label":      "Living Urban Ecosystems",
+    "hero.line1":      "Cities",
+    "hero.line2":      "Transformed",
+    "hero.line3":      "Together",
+    "hero.btn1":       "Explore Our Approach",
+    "hero.btn2":       "See Projects",
+
+    // About
+    "about.label":     "About Us",
+    "about.text":      `At <strong>WECITY</strong>, we believe that cities are transformed when we raise our consciousness and act together under shared purpose. Companies, universities, governments, multilateral organizations, and citizens from around the world connect as a <em>single living, collective organism</em>, co-creating and implementing projects with soul that inspire and transform urban territories into more conscious and human spaces.`,
+
+    // Approach
+    "approach.label":  "Our Approach",
+    "approach.title":  `Open & Hybrid <span class="accent">Collaborative</span> Approach`,
+    "approach.0.title": "WECITY-SENCE",
+    "approach.0.desc":  "We transform ideas, feedback, concerns, and civic sentiment into actionable insights that inform the design and development of creative, evidence-based solutions. In doing so, we foster participation, transparency, citizen empowerment, and shared responsibility.",
+    "approach.1.title": "CO-CREATION",
+    "approach.1.desc":  "Co-creation sessions designed to develop solutions to shared societal challenges, bringing together citizens, the private sector, academia, and government. These spaces foster collaboration, strengthen project feasibility, and promote the efficient, transparent, and strategic use of available resources.",
+    "approach.2.title": "CROWDFUNDING",
+    "approach.2.desc":  "We design crowdfunding campaigns that enable citizens, companies, academia, and governments to invest in projects focused on urban transformation and the common good. We promote co-financing as a catalyst for meaningful change.",
+    "approach.3.title": "WECITY-LAB",
+    "approach.3.desc":  "We understand the city as a living, conscious, and constantly evolving laboratory — an ideal environment to implement pilot tests of innovative, disruptive, and high-impact projects focused on improving quality of life for everyone.",
+    "approach.4.title": "PROJECTS",
+    "approach.4.desc":  "We implement projects for the common good that address urgent challenges such as mobility, air quality, and public safety. Each initiative emerges from real local needs and meets criteria of impact, feasibility, and sustainability.",
+    "approach.5.title": "IMPACT",
+    "approach.5.desc":  "We conduct continuous monitoring of every implemented project through impact measurements focused on improving citizens' quality of life, identifying opportunities for improvement, ensuring resource traceability, overseeing maintenance, and assessing replication potential.",
+
+    // Keynotes
+    "keynotes.label":   "Learn & Transform",
+    "keynotes.title":   "Generate <span class=\"accent\">Positive</span> Impact",
+    "keynotes.0.title": "Smart, Conscious and Human Cities",
+    "keynotes.0.desc":  "An integrated vision for the future of urban development where technology, governance, design, and human values converge.",
+    "keynotes.1.title": "Artificial Intelligence to Transform Cities",
+    "keynotes.1.desc":  "How artificial intelligence and open data, when guided by human values, can help cities evolve into more responsive and equitable environments.",
+    "keynotes.2.title": "Crowdfunding, Blockchain & Collective Impact",
+    "keynotes.2.desc":  "How crowdfunding, crowdsourcing, and blockchain technologies are transforming urban development through collective participation.",
+
+        // Stakeholders
+    "stakeholders.label":   "Together, We Build",
+    "stakeholders.title":   "The Present &amp; Future<br/>of Our <span class=\"accent\">Cities</span>",
+    "stakeholders.0.title": "Companies & Startups",
+    "stakeholders.0.desc":  "Beyond profit, the private sector brings innovation, investment, technology, and execution capacity to the urban environment. By partnering with governments, citizens, and institutions, we accelerate solutions and scale meaningful impact.",
+    "stakeholders.1.title": "Citizens",
+    "stakeholders.1.desc":  "We are artists, creators, makers, dreamers and civic, social and environmental entrepreneurs. Through openness, collaboration, creativity, and collective intelligence, communities co-create solutions that respond to real needs.",
+    "stakeholders.2.title": "Governments",
+    "stakeholders.2.desc":  "Through coherent regulation, transparent permitting, and responsible allocation of public resources, governments create the enabling conditions for collaboration at scale and support the co-creation of human-centered urban solutions.",
+    "stakeholders.3.title": "Academic Institutions",
+    "stakeholders.3.desc":  "We develop data, methodologies, and prototypes that inform decision-making and inspire scalable solutions, ensuring urban transformation is evidence-based, sustainable, and future-oriented.",
+    "stakeholders.4.title": "Civil Society Organizations",
+    "stakeholders.4.desc":  "We connect directly with communities, amplify citizen voices, and safeguard social, cultural, and environmental priorities. Through advocacy, collaboration, and action, we help ensure urban transformation remains inclusive and fair.",
+    "stakeholders.5.title": "Urban Innovation Labs & Think Tanks",
+    "stakeholders.5.desc":  "We provide research, experimentation, policy insight, and innovation capacity to design and scale human-centered urban solutions. Through collaboration and data-driven approaches, cities become smarter and more resilient.",
+      //projects
+    "projects.label": "Conscious Projects & Solutions",
+    "projects.title": "Urban Innovation<br/><span class=\"accent\">In Action</span>",
+    "projects.0.title": "Smart Sensors for Urban Streams",
+    "projects.0.desc": "Smart sensors installed in urban streams monitor pollution levels, water flow, and rainfall in real time. They issue early warnings to nearby communities and authorities, enabling the prevention of environmental emergencies and supporting timely decision-making to protect the surrounding ecosystem.",
+    "projects.1.title": "Smart & Conscious Bus Shelters",
+    "projects.1.desc": "Smart bus shelters equipped with LED lighting, solar panels, a micro wind turbine, charging stations, and a filtered water fountain for pets. Adaptable to each urban context, they provide sustainable and safe solutions for waiting for public transport while enhancing the overall citizen experience.",
+    "projects.2.title": "Aerial Mobility eVOLTs",
+    "projects.2.desc": "The future of urban mobility is already a reality with eVolts: piloted, 100% electric flying vehicles that operate at mid-level altitudes over strategic areas of the city. Designed primarily for short-distance travel, they provide agile and efficient response capabilities in emergency situations.",
+    "projects.3.title": "Conscious Pedestrian Crossings",
+    "projects.3.desc": "Smart pedestrian crossings that prioritize human life through LED technology, motion sensors, AI-powered cameras, and advanced signaling systems. They ensure safe passage for pedestrians, including children, older adults, and pets, adapting to their pace and specific needs within urban environments.",
+    "projects.4.title":"Autonomous Monorails For Hillsides And Slopes",
+    "projects.4.desc": "Small, electric, and autonomous last-mile monorails enable people living on hillsides or in hard-to-reach areas to move safely, comfortably, and sustainably. This solution improves connectivity to public transportation and reduces mobility barriers, particularly in vulnerable communities.",
+    "projects.5.title": "Co-Created Mini Urban Parks",
+    "projects.5.desc": "Small green spaces located in underutilized areas, adapted to local conditions and designed to respond to essential human needs and the connection with nature. They incorporate free Wi-Fi, urban art, functional furniture, solar energy systems, CCTV security cameras, and other elements that enhance safety, accessibility, and community interaction.",
+    "projects.6.title":"Collective Gardens And Farms",
+    "projects.6.desc":"Collective urban gardens co-managed by citizens promote the local production of fresh food and collaborative work. Harvested produce is distributed fairly among participants, strengthening social bonds and fostering a more conscious relationship with the natural environment.",
+    "projects.7.title":"Human-Centered Urban Furniture",
+    "projects.7.desc":"Smart urban furniture integrates climate and air quality sensors, Wi-Fi connectivity, solar-powered charging ports, and interactive systems such as voice or screen-based civic recommendations. It enhances the public space experience while promoting more connected, responsive, and sustainable urban environments.",
+    "projects.8.title":"Green Walls And Sensory Art",
+    "projects.8.desc":"Walls filled with life, color, vegetation, and collaborative art transform the urban landscape. Their maintenance is shared among neighbors and community sponsors. They incorporate mobile or modular vertical gardens that can be temporarily installed in grey or underutilized urban spaces, activating the environment and strengthening community ownership.",
+    "projects.9.title":"Autonomous Robotaxis",
+    "projects.9.desc":"A system of electric and autonomous vehicles connecting strategic points through short, flat, and direct routes. An efficient and sustainable solution for daily transportation, reducing congestion and improving accessibility within urban environments.",
+    "projects.10.title":"Occupancy And Vehicle Couting Sensors",
+    "projects.10.desc":"Occupancy sensors detect available parking spaces in real time at key locations across the city. This data is integrated into digital platforms to guide drivers, reduce traffic congestion, optimize the use of public space, and enhance the overall urban mobility experience.",
+    "projects.11.title":"Intelligent Traffic Classifiers",
+    "projects.11.desc":"A vehicle classification system using intelligent gantries that identify and organize traffic flow according to vehicle type. This technology enhances road safety and optimizes urban mobility by reducing congestion and improving roadway space management.",
+    "projects.12.title":"Circular Economy Hubs",
+    "projects.12.desc":"Small urban community exchange points where people can leave or take useful items such as clothing, books, food, plants, and other goods. They promote the circular economy, solidarity, and resource optimization, strengthening social ties and environmental awareness within each neighborhood.",
+    "projects.13.title":"Citizen Governance Hubs",
+    "projects.13.desc":"Citizen consultation and participation points where the community can access information about active local projects, vote on priorities, propose ideas, and track the progress of neighborhood initiatives. They foster transparency, shared responsibility, and collective empowerment in urban transformation processes.",
+    "projects.14.title":"Calm And Relaxation Urban Pods",
+    "projects.14.desc":"Soundproof cabins installed in urban environments to reduce noise, stimulation, and sensory overload. They function as calm oases within the fast pace of the city, offering a dedicated space for pause, reflection, and well-being—allowing individuals to disconnect from external pressures and reconnect with themselves.",
+    "projects.15.title":"Living And Collaborative Eco-Roofs",
+    "projects.15.desc":"Building rooftops are transformed into active spaces featuring urban farming, solar panels, and green rest areas. This activation promotes sustainability, energy self-sufficiency, and well-being. Underutilized surfaces are reimagined to generate environmental and social value within the urban fabric.",
+    "projects.16.title":"Citizen Reporting App",
+    "projects.16.desc":"A secure platform for registering citizen alerts with collective verification and immediate routing to relevant authorities or community networks. It enables the reporting of incidents such as theft, domestic violence, kidnapping, sexual abuse, excessive noise, animal mistreatment, and other public safety concerns—strengthening civic participation, accountability, and coordinated community response.",
+    "projects.17.title":"AI Tourism And Civic Agents",
+    "projects.17.desc":"An AI-powered conversational assistant trained on local data that provides immediate, clear, and up-to-date responses about directions, administrative procedures, public services, and other civic inquiries. It simplifies access to information and fosters a closer, more responsive relationship between citizens and their urban environment.",
+    "projects.18.title":"Civic Listening Points",
+    "projects.18.desc":"Public devices equipped with cameras and microphones collect citizens’ ideas, thoughts, and reflections in video and audio format. These inputs help build a collective memory of the city’s emotions and experiences, strengthening large-scale listening, civic participation, and the connection between people and their urban territory.",
+    "projects.19.title":"Smart Traffic Lights And Crossings",
+    "projects.19.desc":"Truly intelligent traffic lights that adjust their timing based on real-time pedestrian and vehicle flow. Using AI-powered cameras integrated into the existing traffic signal network, they enhance mobility, reduce waiting times, and prioritize the safety of all road users.",
+    "projects.20.title":"Collective Library Network",
+    "projects.20.desc":"Small boxes or modules where people can freely take, leave, or exchange books. They promote reading, community sharing, and a sense of ownership over public space. With minimal investment, they activate waiting or transit areas, fostering trust, culture, and collective care within the urban environment.",
+    "projects.21.title":"Anti-Noise Patrol Dones",
+    "projects.21.desc":"Civic drones respond to citizen reports using onboard cameras and loudspeakers to broadcast messages when necessary. They conduct environmental monitoring routes—detecting issues such as waste accumulation, excessive noise, or fire risks—and promote respect for the urban environment through active civic presence and rapid response, rather than traditional policing.",
+    "projects.22.title":"Smart Waste Collection Sensors",
+    "projects.22.desc":"Smart sensors monitor bin fill levels and conditions in real time, enabling optimized collection routes, reduced operational costs, and lower emissions. Integrated with digital platforms, they improve efficiency, cleanliness, and environmental performance while supporting data-driven and sustainable waste management across the city.",
+    "projects.23.title":"Regenerative Streetscapes",
+    "projects.23.desc":"Regenerative Streetscapes transform urban corridors into living infrastructure that restores ecological balance and enhances social life. By integrating green stormwater systems, native vegetation, permeable surfaces, and pedestrian-first design, streets reduce heat, manage water naturally, and create healthier, climate-resilient public spaces.",
+
+    "cta.label": "Be Part of the Transformation",
+    "cta.text1": "We extend a call to all people to unite our strengths, beyond differences of profession, religion, political affiliation, sexual orientation, or nationality.",
+    "cta.text2": "Together, let us engage in the co-creation of solutions to the challenges we share, generate a positive impact on our planet, and assume our role as <strong class=\"accent\">co-authors of the urgent transformation</strong> our world requires.",
+    "cta.text3": "Because the future is not something we await — it is something we build, <em>collectively.</em>",
+    "cta.btn1": "Join the Movement",
+    "cta.btn2": "Learn More ↗",
+
+    "contact.label": "Get In Touch",
+    "contact.title": "Let's Build<br/><span class=\"accent\">Together</span>",
+    "contact.sub": "Join the WECITY ecosystem. Whether you're a company, government, academic institution, or citizen — there's a role for you in co-creating the cities of tomorrow.",
+    "contact.region": "South America",
+    "contact.btn": "Send Message",
+
+    "form.name": "Full Name",
+    "form.name.placeholder": "Your name",
+    "form.email": "Email Address",
+    "form.email.placeholder": "your@email.com",
+    "form.message": "Message",
+    "form.message.placeholder": "How can we transform your city together?",
+    "form.btn": "Send Message →",
+    "form.btn.another": "Send Another",
+    "form.success.title": "Message Sent!",
+    "form.success.sub": "We'll get back to you as soon as possible.",
+    "form.error.name": "Name is required.",
+    "form.error.email": "Email is required.",
+    "form.error.email_valid": "Please enter a valid email.",
+    "form.error.message": "Message is required.",
+
+    "footer.rights": "All rights reserved.",
+    "footer.made_in": "Made in",
+    "footer.location": "Medellín, Colombia.",
+    "about.text_short": "Co-creating and implementing projects with soul that inspire and transform urban territories.",
+
+  },
+
+  
+
+  es: {
+    // Navbar
+    "nav.about":       "Nosotros",
+    "nav.approach":    "Nuestro Enfoque",
+    "nav.keynotes":    "Aprende Cómo",
+    "nav.stakeholders":"Ecosistemas",
+    "nav.projects":    "Proyectos",
+    "nav.stats":       "Impacto",
+    "nav.contact":     "Contacto",
+
+    // Hero
+    "hero.label":      "Ecosistemas Urbanos Vivos",
+    "hero.line1":      "Ciudades",
+    "hero.line2":      "Transformadas",
+    "hero.line3":      "Juntos",
+    "hero.btn1":       "Explorar Metodología",
+    "hero.btn2":       "Ver Proyectos",
+
+    // About
+    "about.label":     "Sobre Nosotros",
+    "about.text":      `En <strong>WECITY</strong>, creemos que las ciudades se transforman cuando elevamos nuestra conciencia y actuamos juntos bajo un propósito compartido. Empresas, universidades, gobiernos, organizaciones multilaterales y ciudadanos de todo el mundo se conectan como un <em>único organismo vivo y colectivo</em>, co-creando e implementando proyectos con alma que inspiran y transforman los territorios urbanos en espacios más conscientes y humanos.`,
+
+    // Approach
+    "approach.label":  "Nuestro Enfoque",
+    "approach.title":  `Enfoque <span class="accent">Colaborativo</span> Abierto e Híbrido`,
+    "approach.0.title": "WECITY-SENCE",
+    "approach.0.desc":  "Transformamos ideas, comentarios, inquietudes y sentir ciudadano en información accionable para diseñar soluciones creativas basadas en evidencia. Fomentamos la participación, la transparencia, el empoderamiento ciudadano y la responsabilidad compartida.",
+    "approach.1.title": "CO-CREACIÓN",
+    "approach.1.desc":  "Sesiones de co-creación para desarrollar soluciones a desafíos sociales compartidos, reuniendo ciudadanos, sector privado, academia y gobierno. Estos espacios fortalecen la colaboración, la viabilidad de proyectos y el uso eficiente y transparente de los recursos.",
+    "approach.2.title": "CROWDFUNDING",
+    "approach.2.desc":  "Diseñamos campañas de crowdfunding que permiten a ciudadanos, empresas, academia y gobiernos invertir en proyectos de transformación urbana y bien común. Promovemos el cofinanciamiento como catalizador de cambios significativos.",
+    "approach.3.title": "WECITY-LAB",
+    "approach.3.desc":  "Entendemos la ciudad como un laboratorio vivo, consciente y en constante evolución — un entorno ideal para implementar pruebas piloto de proyectos innovadores, disruptivos y de alto impacto orientados a mejorar la calidad de vida.",
+    "approach.4.title": "PROYECTOS",
+    "approach.4.desc":  "Implementamos proyectos de bien común que abordan retos urgentes como movilidad, calidad del aire y seguridad pública. Cada iniciativa surge de necesidades locales reales y cumple criterios de impacto, viabilidad y sostenibilidad.",
+    "approach.5.title": "IMPACTO",
+    "approach.5.desc":  "Realizamos seguimiento continuo de cada proyecto implementado mediante mediciones de impacto orientadas a mejorar la calidad de vida ciudadana, identificar oportunidades de mejora, garantizar la trazabilidad de recursos y evaluar el potencial de replicación.",
+
+    // Keynotes
+    "keynotes.label":   "Aprende y Transforma",
+    "keynotes.title":   "Genera un <span class=\"accent\">Impacto</span> Positivo",
+    "keynotes.0.title": "Ciudades Inteligentes, Conscientes y Humanas",
+    "keynotes.0.desc":  "Una visión integrada del futuro del desarrollo urbano donde convergen tecnología, gobernanza, diseño y valores humanos.",
+    "keynotes.1.title": "Inteligencia Artificial para Transformar Ciudades",
+    "keynotes.1.desc":  "Cómo la inteligencia artificial y los datos abiertos, guiados por valores humanos, pueden ayudar a las ciudades a evolucionar hacia entornos más equitativos.",
+    "keynotes.2.title": "Crowdfunding, Blockchain e Impacto Colectivo",
+    "keynotes.2.desc":  "Cómo el crowdfunding, el crowdsourcing y el blockchain están transformando el desarrollo urbano a través de la participación colectiva.",
+
+    // Stakeholders
+    "stakeholders.label":   "Juntos, Construimos",
+    "stakeholders.title":   "El Presente y Futuro<br/>de Nuestras <span class=\"accent\">Ciudades</span>",
+    "stakeholders.0.title": "Empresas y Startups",
+    "stakeholders.0.desc":  "Más allá del beneficio, el sector privado aporta innovación, inversión, tecnología y capacidad de ejecución al entorno urbano. Asociándose con gobiernos, ciudadanos e instituciones, aceleramos soluciones e impacto significativo.",
+    "stakeholders.1.title": "Ciudadanos",
+    "stakeholders.1.desc":  "Somos artistas, creadores, emprendedores cívicos, sociales y ambientales. A través de la apertura, la colaboración y la inteligencia colectiva, las comunidades co-crean soluciones que responden a necesidades reales.",
+    "stakeholders.2.title": "Gobiernos",
+    "stakeholders.2.desc":  "Mediante regulación coherente, permisos transparentes y asignación responsable de recursos públicos, los gobiernos crean las condiciones para la colaboración a escala y apoyan la co-creación de soluciones urbanas centradas en las personas.",
+    "stakeholders.3.title": "Instituciones Académicas",
+    "stakeholders.3.desc":  "Desarrollamos datos, metodologías y prototipos que orientan la toma de decisiones e inspiran soluciones escalables, asegurando que la transformación urbana sea sostenible y orientada al futuro.",
+    "stakeholders.4.title": "Organizaciones de la Sociedad Civil",
+    "stakeholders.4.desc":  "Nos conectamos directamente con las comunidades, amplificamos las voces ciudadanas y salvaguardamos prioridades sociales, culturales y ambientales. Garantizamos que la transformación urbana sea inclusiva y justa.",
+    "stakeholders.5.title": "Labs de Innovación Urbana y Think Tanks",
+    "stakeholders.5.desc":  "Aportamos investigación, experimentación e innovación para diseñar soluciones urbanas centradas en las personas. A través de enfoques colaborativos y basados en datos, las ciudades se vuelven más inteligentes y resilientes.",
+
+    "projects.label": "Proyectos y Soluciones Conscientes",
+    "projects.title": "Innovación Urbana<br/><span class=\"accent\">En Acción</span>",
+    "projects.0.title": "Sensores Inteligentes para Arroyos Urbanos",
+    "projects.0.desc": "Sensores inteligentes instalados en los arroyos urbanos monitorean los niveles de contaminación, el flujo de agua y la lluvia en tiempo real, emitiendo alertas tempranas a las comunidades y autoridades cercanas.",
+    "projects.1.title": "Paradas de autobús inteligentes y conscientes",
+    "projects.1.desc": "Paradas de autobús inteligentes equipadas con iluminación LED, paneles solares, una microturbina eólica, estaciones de carga y una fuente de agua filtrada para mascotas. Adaptables a cada contexto urbano, proporcionan soluciones sostenibles y seguras para esperar el transporte público mientras mejoran la experiencia general del ciudadano.",
+    "projects.2.title": "Movilidad aérea eVOLTs",
+    "projects.2.desc": "El futuro de la movilidad urbana ya es una realidad con eVolts: vehículos voladores pilotados, 100% eléctricos, que operan a altitudes medias sobre áreas estratégicas de la ciudad. Diseñados principalmente para viajes de corta distancia, proporcionan capacidades de respuesta ágiles y eficientes en situaciones de emergencia.",
+    "projects.3.title": "Cruces peatonales inteligentes",
+    "projects.3.desc": "Pasos de peatones inteligentes que priorizan la vida humana mediante tecnología LED, sensores de movimiento, cámaras con inteligencia artificial y sistemas de señalización avanzados. Aseguran un paso seguro para los peatones, incluidos niños, adultos mayores y mascotas, adaptándose a su ritmo y necesidades específicas dentro de entornos urbanos.",
+    "projects.4.title":"Monorraíl Autónomos Para Laderas y Pendientes",
+    "projects.4.desc":"Pequeños, eléctricos y autónomos monorraíles de última milla permiten a las personas que viven en laderas o en áreas de difícil acceso moverse de manera segura, cómoda y sostenible. Esta solución mejora la conectividad con el transporte público y reduce las barreras de movilidad, especialmente en comunidades vulnerables.",
+    "projects.5.title": "Mini parques urbanos co-creados",
+    "projects.5.desc": "Pequeños espacios verdes ubicados en áreas subutilizadas, adaptados a las condiciones locales y diseñados para responder a las necesidades humanas esenciales y a la conexión con la naturaleza. Incorporan Wi-Fi gratuito, arte urbano, mobiliario funcional, sistemas de energía solar, cámaras de seguridad CCTV y otros elementos que mejoran la seguridad, la accesibilidad y la interacción comunitaria.",
+    "projects.6.title":"Jardines y granjas colectivas",
+    "projects.6.desc":"Los jardines urbanos colectivos co-gestionados por ciudadanos promueven la producción local de alimentos frescos y el trabajo colaborativo. Los productos cosechados se distribuyen de manera justa entre los participantes, fortaleciendo los lazos sociales y fomentando una relación más consciente con el entorno natural.",
+    "projects.7.title":"Mobiliario urbano centrado en las personas",
+    "projects.7.desc":"Diseñado con la experiencia del usuario en mente, este mobiliario urbano busca mejorar la calidad de vida en los entornos urbanos, fomentando la interacción social y la inclusión.",
+    "projects.8.title":"Muros verdes y arte sensorial",
+    "projects.8.desc":"Muros llenos de vida, color, vegetación y arte colaborativo transforman el paisaje urbano. Su mantenimiento es compartido entre vecinos y patrocinadores comunitarios. Incorporan jardines verticales móviles o modulares que pueden instalarse temporalmente en espacios urbanos grises o subutilizados, activando el entorno y fortaleciendo el sentido de pertenencia comunitaria.",
+    "projects.9.title":"Robotaxis autónomos",
+    "projects.9.desc":"Un sistema de vehículos eléctricos y autónomos que conectan puntos estratégicos a través de rutas cortas, planas y directas. Una solución eficiente y sostenible para el transporte diario, reduciendo la congestión y mejorando la accesibilidad dentro de los entornos urbanos.",
+    "projects.10.title":"Sensores de ocupación y conteo de vehículos",
+    "projects.10.desc":"Sensores de ocupación que detectan espacios de estacionamiento disponibles en tiempo real en ubicaciones clave de la ciudad. Estos datos se integran en plataformas digitales para guiar a los conductores, reducir la congestión del tráfico, optimizar el uso del espacio público y mejorar la experiencia general de movilidad urbana.",
+    "projects.11.title":"Clasificadores de tráfico inteligentes",
+    "projects.11.desc":"Un sistema de clasificación de vehículos mediante pórticos inteligentes que identifican y organizan el flujo de tráfico según el tipo de vehículo. Esta tecnología mejora la seguridad vial y optimiza la movilidad urbana al reducir la congestión y mejorar la gestión del espacio vial.",
+    "projects.12.title":"Centros de economía circular",
+    "projects.12.desc":"Pequeños puntos de intercambio comunitarios urbanos donde las personas pueden dejar o tomar artículos útiles como ropa, libros, alimentos, plantas y otros bienes. Promueven la economía circular, la solidaridad y la optimización de recursos, fortaleciendo los lazos sociales y la conciencia ambiental dentro de cada vecindario.",
+    "projects.13.title":"Centros de gobernanza ciudadana",
+    "projects.13.desc":"Puntos de consulta y participación ciudadana donde la comunidad puede acceder a información sobre proyectos locales activos, votar prioridades, proponer ideas y rastrear el progreso de las iniciativas vecinales. Fomentan la transparencia, la responsabilidad compartida y el empoderamiento colectivo en los procesos de transformación urbana.",
+    "projects.14.title":"Cápsulas urbanas de calma y relajación",
+    "projects.14.desc":"Cabinas insonorizadas instaladas en entornos urbanos para reducir el ruido, la estimulación y la sobrecarga sensorial. Funcionan como oasis de calma dentro del ritmo acelerado de la ciudad, ofreciendo un espacio dedicado a la pausa, la reflexión y el bienestar—permitiendo a las personas desconectarse de las presiones externas y reconectarse consigo mismas.",
+    "projects.15.title":"Eco-techos vivos y colaborativos",
+    "projects.15.desc":"Los techos de los edificios se transforman en espacios activos con agricultura urbana, paneles solares y áreas verdes de descanso. Esta activación promueve la sostenibilidad, la autosuficiencia energética y el bienestar. Las superficies subutilizadas se reimaginan para generar valor ambiental y social dentro del tejido urbano.",
+    "projects.16.title":"App de Reporte Ciudadano",
+    "projects.16.desc":"Una plataforma segura para registrar alertas ciudadanas con verificación colectiva y enrutamiento inmediato a autoridades relevantes o redes comunitarias. Permite reportar incidentes como robos, violencia doméstica, secuestros, abuso sexual, ruido excesivo, maltrato animal y otras preocupaciones de seguridad pública—fortaleciendo la participación cívica, la rendición de cuentas y la respuesta comunitaria coordinada.",
+    "projects.17.title":"Agentes de Turismo y Cívicos con IA",
+    "projects.17.desc":"Un asistente conversacional impulsado por IA entrenado con datos locales que proporciona respuestas inmediatas, claras y actualizadas sobre direcciones, trámites administrativos, servicios públicos y otras consultas cívicas. Simplifica el acceso a la información y fomenta una relación más cercana y receptiva entre los ciudadanos y su entorno urbano.",
+    "projects.18.title":"Puntos de Escucha Cívica",
+    "projects.18.desc":"Dispositivos públicos equipados con cámaras y micrófonos que recopilan ideas, pensamientos y reflexiones de los ciudadanos en formato de video y audio. Estos aportes ayudan a construir una memoria colectiva de las emociones y experiencias de la ciudad, fortaleciendo la escucha a gran escala, la participación cívica y la conexión entre las personas y su territorio urbano.",
+    "projects.19.title":"Semáforos y cruces inteligentes",
+    "projects.19.desc":"Semáforos verdaderamente inteligentes que ajustan su tiempo en función del flujo de peatones y vehículos en tiempo real. Mediante cámaras con inteligencia artificial integradas en la red de señales de tráfico existente, mejoran la movilidad, reducen los tiempos de espera y priorizan la seguridad de todos los usuarios de la vía.",
+    "projects.20.title":"Red de bibliotecas colectivas",
+    "projects.20.desc":"Pequeñas cajas o módulos donde las personas pueden tomar, dejar o intercambiar libros de forma gratuita. Promueven la lectura, el intercambio comunitario y un sentido de pertenencia sobre el espacio público. Con una inversión mínima, activan áreas de espera o tránsito, fomentando la confianza, la cultura y el cuidado colectivo dentro del entorno urbano.",
+    "projects.21.title":"Drones de patrulla anti-ruido",
+    "projects.21.desc":"Drones cívicos que responden a reportes ciudadanos utilizando cámaras a bordo y altavoces para emitir mensajes cuando sea necesario. Realizan rutas de monitoreo ambiental—detectando problemas como acumulación de basura, ruido excesivo o riesgos de incendio—y promueven el respeto por el entorno urbano a través de una presencia cívica activa y una respuesta rápida, en lugar de la vigilancia tradicional.",
+    "projects.22.title":"Sensores inteligentes de recolección de residuos",
+    "projects.22.desc":"Sensores inteligentes que monitorean los niveles de llenado y las condiciones de los contenedores en tiempo real,permitiendo optimizar las rutas de recolección, reducir los costos operativos y las emisiones. Integrados con plataformas digitales, mejoran la eficiencia, la limpieza y el desempeño ambiental mientras apoyan una gestión de residuos sostenible y basada en datos en toda la ciudad.",
+    "projects.23.title":"Calles Regenerativas",
+    "projects.23.desc":"Las calles regenerativas transforman los corredores urbanos en infraestructura viva que restaura el equilibrio ecológico y mejora la vida social. Al integrar sistemas verdes de gestión de aguas pluviales, vegetación nativa, superficies permeables y un diseño centrado en el peatón, las calles reducen el calor, gestionan el agua de forma natural y crean espacios públicos más saludables y resilientes al clima.",
+
+    "cta.label": "Sé parte de la transformación",
+    "cta.text1": "Extendemos un llamado a todas las personas para unir nuestras fortalezas, más allá de diferencias de profesión, religión, afiliación política, orientación sexual o nacionalidad.",
+    "cta.text2": "Juntos, participemos en la co-creación de soluciones a los desafíos que compartimos, generemos un impacto positivo en nuestro planeta y asumamos nuestro papel como <strong class=\"accent\">coautores de la transformación urgente</strong> que nuestro mundo requiere.",
+    "cta.text3": "Porque el futuro no es algo que esperamos — es algo que construimos, <em>colectivamente.</em>",
+    "cta.btn1": "Únete al Movimiento",
+    "cta.btn2": "Saber más ↗",
+
+    "contact.label": "Ponte en contacto",
+    "contact.title": "Construyamos<br/><span class=\"accent\">Juntos</span>",
+    "contact.sub": "Únete al ecosistema WECITY. Ya seas una empresa, gobierno, institución académica o ciudadano, tienes un papel en la co-creación de las ciudades del mañana.",
+    "contact.region": "Sudamérica",
+    "contact.btn": "Enviar Mensaje",
+
+    "form.name": "Nombre Completo",
+    "form.name.placeholder": "Tu nombre",
+    "form.email": "Correo Electrónico",
+    "form.email.placeholder": "tu@correo.com",
+    "form.message": "Mensaje",
+    "form.message.placeholder": "¿Cómo podemos transformar tu ciudad juntos?",
+    "form.btn": "Enviar Mensaje →",
+    "form.btn.another": "Enviar otro",
+    "form.success.title": "¡Mensaje Enviado!",
+    "form.success.sub": "Nos pondremos en contacto contigo lo antes posible.",
+    "form.error.name": "El nombre es obligatorio.",
+    "form.error.email": "El correo es obligatorio.",
+    "form.error.email_valid": "Por favor, ingresa un correo válido.",
+    "form.error.message": "El mensaje es obligatorio.",
+
+    "footer.rights": "Todos los derechos reservados.",
+    "footer.made_in": "Hecho en",
+    "footer.location": "Medellín, Colombia.",
+    "about.text_short": "Co-creamos e implementamos proyectos con alma que inspiran y transforman territorios urbanos.",
+  }
+};
+
+  function applyLang(lang: Lang) {
+  const t = translations[lang];
+  if (!t) return;
+
+  // 1. Traducir textos normales e innerHTML
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n') as keyof typeof t;
+    if (t[key]) {
+      const htmlElement = el as HTMLElement;
+      const hasHtml = /<[a-z][\s\S]*>/i.test(t[key]);
+      if (hasHtml) {
+        htmlElement.innerHTML = t[key];
+      } else {
+        htmlElement.textContent = t[key];
+      }
+    }
+  });
+
+  // 2. NUEVO: Traducir Placeholders (el texto de ejemplo)
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder') as keyof typeof t;
+    if (t[key]) {
+      // Forzamos el tipo a Input o TextArea para acceder a la propiedad .placeholder
+      (el as HTMLInputElement | HTMLTextAreaElement).placeholder = t[key];
+    }
+  });
+
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    const label = document.getElementById('langLabel');
+    if (label) label.textContent = lang === 'en' ? 'ES' : 'EN';
+    localStorage.setItem('wecity-lang', lang);
+    }
+
+      function initLang() {
+        const saved = localStorage.getItem('wecity-lang');
+        const savedLang: Lang = (saved === 'es' || saved === 'en') ? saved : 'en';
+        
+        applyLang(savedLang);
+
+        const btn = document.getElementById('langToggle');
+        // Solución al error de parentNode possibly null
+        if (btn && btn.parentNode) {
+          const newBtn = btn.cloneNode(true) as HTMLButtonElement;
+          btn.parentNode.replaceChild(newBtn, btn);
+          
+          newBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const current = document.documentElement.getAttribute('data-lang') as Lang || 'en';
+            const next: Lang = current === 'en' ? 'es' : 'en';
+            applyLang(next);
+          });
+        }
+      }
+
+      // Ejecutar inicialización
+      initLang();
+    </script>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: var(--col-accent);
+        color: #060707;
+        padding: 0.5rem 1rem;
+        border-radius: 0 0 8px 8px;
+        font-family: var(--font-body);
+        font-size: 0.82rem;
+        font-weight: 500; 
+        z-index: 999;
+        transition: top 0.2s;
+      }
+      .skip-link:focus { top: 0; }
+    </style>
+  </body>
+</html>

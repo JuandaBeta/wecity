@@ -1,0 +1,113 @@
+---
+// Stakeholders.astro
+import { stakeholders } from '../data/content.ts';
+---
+
+<section class="stakeholders section-pad" id="stakeholders">
+  <div class="container">
+    <div class="stakeholders__header fade-up">
+      <p class="label" data-i18n="stakeholders.label">Together, We Build</p>
+      <h2 class="display-lg" data-i18n="stakeholders.title">
+        The Present &amp; Future<br/>
+        of Our <span class="accent">Cities</span>
+      </h2>
+    </div>
+
+    <div class="stakeholders__grid">
+      {stakeholders.map((s, i) => (
+        <article class="stakeholders__card fade-up" style={`--delay: ${i * 0.08}s`}>
+          <div class="stakeholders__card-img">
+            <img src={s.image} alt={s.title} loading="lazy" decoding="async" />
+          </div>
+          <div class="stakeholders__card-content">
+            <h3 class="stakeholders__card-title" data-i18n={`stakeholders.${i}.title`}>{s.title}</h3>
+            <p class="stakeholders__card-desc" data-i18n={`stakeholders.${i}.desc`}>{s.description}</p>
+          </div>
+          <div class="stakeholders__card-accent" aria-hidden="true"></div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stakeholders__header {
+    margin-bottom: 3.5rem;
+    max-width: 560px;
+  }
+  .stakeholders__header .label { margin-bottom: 1rem; }
+
+  .stakeholders__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--col-border);
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .stakeholders__card {
+    position: relative;
+    overflow: hidden;
+    background: var(--col-bg);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.35s;
+  }
+  .stakeholders__card:hover { background: var(--col-surface); }
+
+  .stakeholders__card-img {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .stakeholders__card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out), filter 0.4s;
+    filter: grayscale(30%);
+  }
+  .stakeholders__card:hover .stakeholders__card-img img {
+    transform: scale(1.06);
+    filter: grayscale(0%);
+  }
+
+  .stakeholders__card-content {
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  .stakeholders__card-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.6rem;
+    color: var(--col-white);
+  }
+
+  .stakeholders__card-desc {
+    font-size: 0.875rem;
+    color: var(--col-text-dim);
+    line-height: 1.65;
+  }
+
+  .stakeholders__card-accent {
+    height: 2px;
+    background: var(--col-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s var(--ease-out);
+  }
+  .stakeholders__card:hover .stakeholders__card-accent {
+    transform: scaleX(1);
+  }
+
+  @media (max-width: 900px) {
+    .stakeholders__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 580px) {
+    .stakeholders__grid { grid-template-columns: 1fr; }
+  }
+</style>

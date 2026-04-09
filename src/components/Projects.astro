@@ -1,0 +1,632 @@
+---
+// Projects.astro
+import { projects } from '../data/content.ts';
+
+const tags = ['All', ...Array.from(new Set(projects.map(p => p.tag)))];
+---
+
+<section class="projects section-pad" id="projects">
+  <div class="container">
+
+    <div class="projects__header fade-up">
+      <p class="label" data-i18n="projects.label">Conscious Projects &amp; Solutions</p>
+      <h2 class="display-lg" data-i18n="projects.title">
+        Urban Innovation<br/>
+        <span class="accent">In Action</span>
+      </h2>
+    </div>
+
+    <div class="projects__filters fade-up" id="projectFilters" role="group" aria-label="Filter projects by category">
+      {tags.map(tag => (
+        <button
+          class={`projects__filter-btn ${tag === 'All' ? 'active' : ''}`}
+          data-tag={tag}
+          aria-pressed={tag === 'All' ? 'true' : 'false'}
+        >
+          {tag}
+        </button>
+      ))}
+    </div>
+
+    <div class="projects__grid" id="projectsGrid">
+      {projects.map((p, i) => (
+        <article
+          class="projects__card fade-up"
+          data-tag={p.tag}
+          data-index={i}
+          style={`--delay: ${(i % 4) * 0.07}s`}
+        >
+          <!-- Image: click opens lightbox -->
+          <div
+            class="projects__card-img"
+            role="button"
+            tabindex="0"
+            aria-label={`Expand ${p.title}`}
+            data-lightbox={i}
+          >
+            <img src={p.image} alt={p.title} loading="lazy" decoding="async" />
+            <div class="projects__card-badge label">{p.tag}</div>
+            <div class="projects__card-zoom" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/>
+                <line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Body -->
+          <div class="projects__card-body">
+           <h3 class="projects__card-title" data-i18n={`projects.${i}.title`}>
+              {p.title}
+            </h3>
+
+          <p class="projects__card-desc" data-i18n={`projects.${i}.desc`}>
+            {p.description}
+          </p>
+          </div>
+
+          <!-- Heart button -->
+          <div class="projects__card-footer">
+            <button
+              class="projects__like-btn"
+              data-like={i}
+              aria-label="Like this project"
+            >
+              <svg class="heart-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
+              <span class="projects__like-count" data-count={i}>0</span>
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="projects__lightbox" id="projectsLightbox" role="dialog" aria-modal="true" aria-label="Project detail" hidden>
+  <div class="projects__lightbox-backdrop" id="lightboxBackdrop"></div>
+  <div class="projects__lightbox-panel">
+    <button class="projects__lightbox-close" id="lightboxClose" aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <div class="projects__lightbox-img">
+      <img id="lightboxImg" src="" alt="" />
+      <span class="projects__lightbox-badge label" id="lightboxBadge"></span>
+    </div>
+
+    <div class="projects__lightbox-body">
+      <h2 class="projects__lightbox-title" id="lightboxTitle"></h2>
+      <p class="projects__lightbox-desc" id="lightboxDesc"></p>
+
+      <div class="projects__lightbox-footer">
+        <button class="projects__like-btn projects__like-btn--lg" id="lightboxLikeBtn" aria-label="Like this project">
+          <svg class="heart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+          <span id="lightboxLikeCount">0</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ── Section ── */
+  .projects { background: var(--col-surface); }
+
+  .projects__header {
+    margin-bottom: 2rem;
+    max-width: 640px;
+  }
+  .projects__header .label { margin-bottom: 1rem; }
+
+  /* ── Filter buttons ── */
+  .projects__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .projects__filter-btn {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--col-border);
+    background: transparent;
+    color: var(--col-text-dim);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .projects__filter-btn:hover,
+  .projects__filter-btn.active {
+    background: var(--col-accent);
+    border-color: var(--col-accent);
+    color: var(--col-bg);
+  }
+
+  /* ── Grid ── */
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  /* ── Card ── */
+  .projects__card {
+    background: var(--col-bg);
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s var(--ease-out);
+    transition-delay: var(--delay);
+  }
+  .projects__card:hover {
+    border-color: rgba(166, 224, 58, 0.4);
+    transform: translateY(-4px);
+  }
+  .projects__card.hidden { display: none; }
+
+  /* ── Card image ── */
+  .projects__card-img {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--col-surface);
+    cursor: pointer;
+  }
+  .projects__card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease-out), filter 0.3s;
+  }
+  .projects__card-img:hover img {
+    transform: scale(1.06);
+    filter: brightness(0.75);
+  }
+
+  .projects__card-zoom {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    color: #fff;
+  }
+  .projects__card-img:hover .projects__card-zoom { opacity: 1; }
+  .projects__card-zoom svg { width: 28px; height: 28px; }
+
+  .projects__card-badge {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: rgba(8,9,7,0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.62rem;
+  }
+
+  /* ── Card body: texto SIN clamp ── */
+  .projects__card-body {
+    flex: 1;
+    padding: 1rem 1.1rem 0.75rem;
+  }
+
+  .projects__card-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+    color: var(--col-white);
+  }
+
+  .projects__card-desc {
+    font-size: 0.8rem;
+    color: var(--col-text-dim);
+    line-height: 1.6;
+    /* Sin clamp — texto completo visible */
+  }
+
+  /* ── Card footer: corazón ── */
+  .projects__card-footer {
+    padding: 0.5rem 1.1rem 0.9rem;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--col-border);
+    margin-top: 0.5rem;
+  }
+
+  .projects__like-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--col-text-dim);
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-pill);
+    transition: color 0.2s, background 0.2s;
+  }
+  .projects__like-btn:hover {
+    color: #e05c7a;
+    background: rgba(224, 92, 122, 0.08);
+  }
+  .projects__like-btn.liked {
+    color: #e05c7a;
+  }
+  .projects__like-btn.liked .heart-icon {
+    fill: #e05c7a;
+    stroke: #e05c7a;
+  }
+  .projects__like-btn--lg {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--col-border);
+  }
+
+  .heart-icon {
+    transition: fill 0.2s, stroke 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+  .projects__like-btn:active .heart-icon {
+    transform: scale(1.35);
+  }
+
+  /* ── Lightbox ── */
+  .projects__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .projects__lightbox[hidden] { display: none; }
+
+  .projects__lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(6, 7, 8, 0.88);
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+  }
+
+  .projects__lightbox-panel {
+    position: relative;
+    z-index: 1;
+    background: var(--col-bg);
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    width: 100%;
+    max-width: 780px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    animation: lb-in 0.28s var(--ease-out);
+  }
+
+  @keyframes lb-in {
+    from { opacity: 0; transform: scale(0.95) translateY(12px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .projects__lightbox-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 2;
+    background: rgba(6,7,8,0.7);
+    border: 1px solid var(--col-border);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--col-white);
+    transition: background 0.2s;
+  }
+  .projects__lightbox-close:hover { background: rgba(6,7,8,0.95); }
+
+  .projects__lightbox-img {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+  }
+  .projects__lightbox-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .projects__lightbox-badge {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    background: rgba(8,9,7,0.85);
+    backdrop-filter: blur(8px);
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.62rem;
+  }
+
+  .projects__lightbox-body {
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .projects__lightbox-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    color: var(--col-white);
+  }
+
+  .projects__lightbox-desc {
+    font-size: 0.9rem;
+    color: var(--col-text-dim);
+    line-height: 1.7;
+    flex: 1;
+  }
+
+  .projects__lightbox-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--col-border);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1100px) {
+    .projects__grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .projects__grid { grid-template-columns: repeat(2, 1fr); }
+    .projects__lightbox-panel { grid-template-columns: 1fr; }
+    .projects__lightbox-img { aspect-ratio: 16/9; }
+  }
+  @media (max-width: 480px) {
+    .projects__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  // ── Data de proyectos para el lightbox ──
+  const projectsData: { title: string; tag: string; description: string; image: string }[] = [
+    { title: "Smart Sensors for Urban Streams", tag: "Environment", description: "Smart sensors installed in urban streams monitor pollution levels, water flow, and rainfall in real time. They issue early warnings to nearby communities and authorities, enabling the prevention of environmental emergencies and supporting timely decision-making to protect the surrounding ecosystem.", image: "https://framerusercontent.com/images/WDBi8N9d0uWDy7qTtLrbovDFO74.png?width=600&height=600" },
+    { title: "Smart & Conscious Bus Shelters", tag: "Mobility", description: "Smart bus shelters equipped with LED lighting, solar panels, a micro wind turbine, charging stations, and a filtered water fountain for pets. Adaptable to each urban context, they provide sustainable and safe solutions for waiting for public transport while enhancing the overall citizen experience.", image: "https://framerusercontent.com/images/7cxB3p0qiRpEihPyUYxAaldyA0.png?width=600&height=600" },
+    { title: "Aerial Mobility eVOLTs", tag: "Mobility", description: "The future of urban mobility is already a reality with eVolts: piloted, 100% electric flying vehicles that operate at mid-level altitudes over strategic areas of the city. Designed primarily for short-distance travel, they provide agile and efficient response capabilities in emergency situations.", image: "https://framerusercontent.com/images/NsS6pwGZuouZqr1lRBupNVFOfI.png?width=600&height=600" },
+    { title: "Conscious Pedestrian Crossings", tag: "Safety", description: "Smart pedestrian crossings that prioritize human life through LED technology, motion sensors, AI-powered cameras, and advanced signaling systems. They ensure safe passage for pedestrians, including children, older adults, and pets, adapting to their pace and specific needs within urban environments.", image: "https://framerusercontent.com/images/D8N76cAODGuT6POJUFzdECQCDE.png?width=600&height=600" },
+    { title: "Autonomous Monorails for Hillsides", tag: "Mobility", description: "Small, electric, and autonomous last-mile monorails enable people living on hillsides or in hard-to-reach areas to move safely, comfortably, and sustainably. This solution improves connectivity to public transportation and reduces mobility barriers, particularly in vulnerable communities.", image: "https://framerusercontent.com/images/IbyC5mnVxyCKnM8yhJIwzUM0xQ.png?width=600&height=600" },
+    { title: "Co-Created Mini Urban Parks", tag: "Green Spaces", description: "Small green spaces located in underutilized areas, adapted to local conditions and designed to respond to essential human needs and the connection with nature. They incorporate free Wi-Fi, urban art, functional furniture, solar energy systems, CCTV security cameras, and other elements that enhance safety, accessibility, and community interaction.", image: "https://framerusercontent.com/images/C6bvJutkNypaUKYgVw980tGTF0Y.png?width=600&height=600" },
+    { title: "Collective Gardens and Farms", tag: "Food", description: "Collective urban gardens co-managed by citizens promote the local production of fresh food and collaborative work. Harvested produce is distributed fairly among participants, strengthening social bonds and fostering a more conscious relationship with the natural environm", image: "https://framerusercontent.com/images/tL1Z9wI3nLWPle5kaL53aC0KxE.png?width=600&height=600" },
+    { title: "Human-Centered Urban Furniture", tag: "Infrastructure", description: "Smart urban furniture integrates climate and air quality sensors, Wi-Fi connectivity, solar-powered charging ports, and interactive systems such as voice or screen-based civic recommendations. It enhances the public space experience while promoting more connected, responsive, and sustainable urban environments.", image: "https://framerusercontent.com/images/1IdVfBjHAmFeV9gBWYlXG7tVY90.png?width=600&height=600" },
+    { title: "Green Walls and Sensory Art", tag: "Green Spaces", description: "Walls filled with life, color, vegetation, and collaborative art transform the urban landscape. Their maintenance is shared among neighbors and community sponsors. They incorporate mobile or modular vertical gardens that can be temporarily installed in grey or underutilized urban spaces, activating the environment and strengthening community ownership.", image: "https://framerusercontent.com/images/Ic743bLKr6XkemPt0m0SFjIRXSQ.png?width=600&height=600" },
+    { title: "Autonomous Robotaxis", tag: "Mobility", description: "A system of electric and autonomous vehicles connecting strategic points through short, flat, and direct routes. An efficient and sustainable solution for daily transportation, reducing congestion and improving accessibility within urban environments.", image: "https://framerusercontent.com/images/vTCu5NTsZFWK6jDgrafcmH3Rk.png?width=600&height=600" },
+    { title: "Occupancy & Vehicle Counting Sensors", tag: "Mobility", description: "Occupancy sensors detect available parking spaces in real time at key locations across the city. This data is integrated into digital platforms to guide drivers, reduce traffic congestion, optimize the use of public space, and enhance the overall urban mobility experience.", image: "https://framerusercontent.com/images/Xzx1xQ2AxfzMKttcCjgpCp3OUBo.jpg?width=600&height=600" },
+    { title: "Intelligent Traffic Classifiers", tag: "Safety", description: "A vehicle classification system using intelligent gantries that identify and organize traffic flow according to vehicle type. This technology enhances road safety and optimizes urban mobility by reducing congestion and improving roadway space management.", image: "https://framerusercontent.com/images/ugJ99BzenWR6VXFK29L3jkpHhY.png?width=600&height=600" },
+    { title: "Circular Economy Hubs", tag: "Sustainability", description: "Small urban community exchange points where people can leave or take useful items such as clothing, books, food, plants, and other goods. They promote the circular economy, solidarity, and resource optimization, strengthening social ties and environmental awareness within each neighborhood.", image: "https://framerusercontent.com/images/xiDZJ9UaSmDRhJzS5bpfPBH5Ig0.png?width=600&height=600" },
+    { title: "Citizen Governance Hubs", tag: "Governance", description: "Citizen consultation and participation points where the community can access information about active local projects, vote on priorities, propose ideas, and track the progress of neighborhood initiatives. They foster transparency, shared responsibility, and collective empowerment in urban transformation processes.", image: "https://framerusercontent.com/images/0oV2pZXZsCDRS1hzR9Zvo6sE.jpg?width=600&height=600" },
+    { title: "Calm and Relaxation Urban Pods", tag: "Wellbeing", description: "Soundproof cabins installed in urban environments to reduce noise, stimulation, and sensory overload. They function as calm oases within the fast pace of the city, offering a dedicated space for pause, reflection, and well-being—allowing individuals to disconnect from external pressures and reconnect with themselves.", image: "https://framerusercontent.com/images/e7nNkMj3MruPOejaQvgmpN4Qu4.png?width=600&height=600" },
+    { title: "Living and Collaborative Eco-Roofs", tag: "Sustainability", description: "Building rooftops are transformed into active spaces featuring urban farming, solar panels, and green rest areas. This activation promotes sustainability, energy self-sufficiency, and well-being. Underutilized surfaces are reimagined to generate environmental and social value within the urban fabric.", image: "https://framerusercontent.com/images/JJfY9O0W2J7UeSP1Kwi3KZxroxA.png?width=600&height=600" },
+    { title: "Citizen Reporting App", tag: "Safety", description: "A secure platform for registering citizen alerts with collective verification and immediate routing to relevant authorities or community networks. It enables the reporting of incidents such as theft, domestic violence, kidnapping, sexual abuse, excessive noise, animal mistreatment, and other public safety concerns—strengthening civic participation, accountability, and coordinated community response.", image: "https://framerusercontent.com/images/bSb0RkDHTI2N9PKAUjNUA1U5rw.png?width=600&height=600" },
+    { title: "AI Tourism and Civic Agent", tag: "Technology", description: "An AI-powered conversational assistant trained on local data that provides immediate, clear, and up-to-date responses about directions, administrative procedures, public services, and other civic inquiries. It simplifies access to information and fosters a closer, more responsive relationship between citizens and their urban environment.", image: "https://framerusercontent.com/images/1IdVfBjHAmFeV9gBWYlXG7tVY90.png?width=600&height=600" },
+    { title: "Civic listening points", tag:"Governance", description:"Public devices equipped with cameras and microphones collect citizens’ ideas, thoughts, and reflections in video and audio format. These inputs help build a collective memory of the city’s emotions and experiences, strengthening large-scale listening, civic participation, and the connection between people and their urban territory.", image:"https://framerusercontent.com/images/0oV2pZXZsCDRS1hzR9Zvo6sE.jpg?width=600&height=600"},
+    { title: "Smart Traffic Lights and Crossings", tag: "Mobility", description: "Truly intelligent traffic lights that adjust their timing based on real-time pedestrian and vehicle flow. Using AI-powered cameras integrated into the existing traffic signal network, they enhance mobility, reduce waiting times, and prioritize the safety of all road users.", image: "https://framerusercontent.com/images/TihllsScsiRs2PrjCTgnwhFOIPs.png?width=600&height=600" },
+    { title: "Collective Library Network", tag: "Education", description: "Small boxes or modules where people can freely take, leave, or exchange books. They promote reading, community sharing, and a sense of ownership over public space. With minimal investment, they activate waiting or transit areas, fostering trust, culture, and collective care within the urban environment.", image: "https://framerusercontent.com/images/xiDZJ9UaSmDRhJzS5bpfPBH5Ig0.png?width=600&height=600" },
+    { title: "Smart Waste Collection Sensors", tag: "Environment", description: "Smart sensors monitor bin fill levels and conditions in real time, enabling optimized collection routes, reduced operational costs, and lower emissions.", image: "https://framerusercontent.com/images/JNr6gZbrLUn3Lb4HSH4vnydJL0.png?width=600&height=600" },
+  ];
+
+  // ── Likes: persistencia en localStorage ──
+  const STORAGE_KEY = 'wecity-likes';
+
+  function getLikes(): Record<number, number> {
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+
+    // 🔥 SI NO HAY DATOS → CREARLOS
+    if (Object.keys(stored).length === 0) {
+      const initialLikes: Record<number, number> = {};
+
+      document.querySelectorAll('[data-count]').forEach((_, idx) => {
+        initialLikes[idx] = Math.floor(Math.random() * 900) + 100;
+      });
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialLikes));
+      return initialLikes;
+    }
+
+    return stored;
+  } catch {
+    return {};
+  }
+}
+  function saveLikes(data: Record<number, number>) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+  function getLiked(): Set<number> {
+    try { return new Set(JSON.parse(localStorage.getItem(STORAGE_KEY + '-liked') || '[]')); } catch { return new Set(); }
+  }
+  function saveLiked(data: Set<number>) {
+    localStorage.setItem(STORAGE_KEY + '-liked', JSON.stringify([...data]));
+  }
+
+  // ── Inicializar contadores ──
+  const likes  = getLikes();
+  const liked  = getLiked();
+
+  function renderCounts() {
+    document.querySelectorAll<HTMLElement>('[data-count]').forEach(el => {
+      const idx = Number(el.dataset.count);
+      el.textContent = String(likes[idx] ?? 0);
+    });
+    document.querySelectorAll<HTMLElement>('[data-like]').forEach(btn => {
+      const idx = Number((btn as HTMLButtonElement).dataset.like);
+      btn.classList.toggle('liked', liked.has(idx));
+    });
+  }
+  renderCounts();
+
+  // ── Toggle like desde card ──
+document.querySelectorAll<HTMLButtonElement>('[data-like]').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const idx = Number(btn.dataset.like);
+    toggleLike(idx);
+  });
+});
+
+// ── CRECIMIENTO AUTOMÁTICO DE LIKES (FIXED) ──
+setInterval(() => {
+  const likes = getLikes();
+  const liked = getLiked();
+
+  Object.keys(likes).forEach(key => {
+    const idx = Number(key); // 🔑 FIX
+
+    if (!liked.has(idx) && Math.random() > 0.4) {
+      const growth = Math.floor(Math.random() * 5) + 1;
+
+      likes[idx] = (likes[idx] ?? 0) + growth;
+
+      document.querySelectorAll(`[data-count="${idx}"]`).forEach(el => {
+        el.textContent = String(likes[idx]);
+      });
+    }
+  });
+
+  saveLikes(likes);
+}, 4000);
+
+  function toggleLike(idx: number) {
+    const likes = getLikes();
+    const liked  = getLiked();
+    if (liked.has(idx)) {
+      liked.delete(idx);
+      likes[idx] = Math.max(0, (likes[idx] ?? 1) - 1);
+    } else {
+      liked.add(idx);
+      likes[idx] = (likes[idx] ?? 0) + 1;
+    }
+    saveLikes(likes);
+    saveLiked(liked);
+
+    // Actualizar contadores en card
+    document.querySelectorAll<HTMLElement>(`[data-count="${idx}"]`).forEach(el => {
+      el.textContent = String(likes[idx]);
+    });
+    document.querySelectorAll<HTMLButtonElement>(`[data-like="${idx}"]`).forEach(btn => {
+      btn.classList.toggle('liked', liked.has(idx));
+    });
+
+    // Si el lightbox está abierto con este proyecto, sincronizar
+    const lb = document.getElementById('projectsLightbox');
+    if (!lb?.hidden && currentLightboxIdx === idx) {
+      const lbLikeCount = document.getElementById('lightboxLikeCount');
+      const lbLikeBtn   = document.getElementById('lightboxLikeBtn');
+      if (lbLikeCount) lbLikeCount.textContent = String(likes[idx]);
+      lbLikeBtn?.classList.toggle('liked', liked.has(idx));
+    }
+  }
+
+  // ── Lightbox ──
+  let currentLightboxIdx = -1;
+  const lightbox     = document.getElementById('projectsLightbox')!;
+  const lbImg        = document.getElementById('lightboxImg') as HTMLImageElement;
+  const lbBadge      = document.getElementById('lightboxBadge')!;
+  const lbTitle      = document.getElementById('lightboxTitle')!;
+  const lbDesc       = document.getElementById('lightboxDesc')!;
+  const lbLikeBtn    = document.getElementById('lightboxLikeBtn')!;
+  const lbLikeCount  = document.getElementById('lightboxLikeCount')!;
+  const lbClose      = document.getElementById('lightboxClose')!;
+  const lbBackdrop   = document.getElementById('lightboxBackdrop')!;
+
+  function openLightbox(idx: number) {
+    const p = projectsData[idx];
+    if (!p) return;
+    currentLightboxIdx = idx;
+    lbImg.src         = p.image;
+    lbImg.alt         = p.title;
+    lbBadge.textContent = p.tag;
+    lbTitle.textContent = p.title;
+    lbDesc.textContent  = p.description;
+
+    const likes = getLikes();
+    const liked  = getLiked();
+    lbLikeCount.textContent = String(likes[idx] ?? 0);
+    lbLikeBtn.classList.toggle('liked', liked.has(idx));
+    lbLikeBtn.dataset.like = String(idx);
+
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+    currentLightboxIdx = -1;
+  }
+
+  // Abrir desde imagen de card
+  document.querySelectorAll<HTMLElement>('[data-lightbox]').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      openLightbox(Number(trigger.dataset.lightbox));
+    });
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') openLightbox(Number(trigger.dataset.lightbox));
+    });
+  });
+
+  // Like desde lightbox
+  lbLikeBtn.addEventListener('click', () => {
+    if (currentLightboxIdx >= 0) toggleLike(currentLightboxIdx);
+  });
+
+  // Cerrar
+  lbClose.addEventListener('click', closeLightbox);
+  lbBackdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+
+  // ── Filtros ──
+  const filterBtns = document.querySelectorAll<HTMLButtonElement>('.projects__filter-btn');
+  const cards      = document.querySelectorAll<HTMLElement>('.projects__card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tag = btn.dataset.tag!;
+      filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      cards.forEach(card => {
+        card.classList.toggle('hidden', tag !== 'All' && card.dataset.tag !== tag);
+      });
+    });
+  });
+</script>

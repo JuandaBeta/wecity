@@ -1,0 +1,95 @@
+---
+// Contact.astro
+import ContactForm from './ContactForm.tsx';
+---
+
+<section class="contact section-pad" id="contact">
+  <div class="container">
+    <div class="contact__layout">
+      <div class="contact__info fade-up">
+        <p class="label" data-i18n="contact.label">Get In Touch</p>
+        <h2 class="display-lg" data-i18n="contact.title">
+          Let's Build<br/>
+          <span class="accent">Together</span>
+        </h2>
+        <p class="body-lg contact__sub" data-i18n="contact.sub">
+          Join the WECITY ecosystem. Whether you're a company, government,
+          academic institution, or citizen — there's a role for you in
+          co-creating the cities of tomorrow.
+        </p>
+
+        <div class="contact__location">
+          <div class="contact__location-icon">📍</div>
+          <div>
+            <p class="contact__location-city">Medellín — Colombia</p>
+            <p class="contact__location-country" data-i18n="contact.region">South America</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact__form-wrap fade-up">
+        <ContactForm client:load />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--col-surface);
+  }
+
+  .contact__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact__info .label { margin-bottom: 1rem; }
+
+  .contact__sub {
+    margin-top: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact__location {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-md);
+    background: var(--col-bg);
+  }
+
+  .contact__location-icon {
+    font-size: 1.5rem;
+  }
+
+  .contact__location-city {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .contact__location-country {
+    font-size: 0.8rem;
+    color: var(--col-text-dim);
+    margin-top: 0.1rem;
+  }
+
+  .contact__form-wrap {
+    background: var(--col-bg);
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+  }
+
+  @media (max-width: 900px) {
+    .contact__layout {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

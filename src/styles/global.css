@@ -1,0 +1,196 @@
+/* ========================================
+   WECITY — Global Design System
+   Refined Urban Elegance — Dual Theme
+======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+/* ── Dark theme (default) ── */
+:root, [data-theme="dark"] {
+  --col-bg:       #070808;
+  --col-surface:  #0D0F0E;
+  --col-border:   #1E211E;
+  --col-muted:    #363A35;
+  --col-text:     #EAE7DC;
+  --col-text-dim: #878A7E;
+  --col-accent:   #A6E03A;
+  --col-gold:     #D4B84A;
+  --col-white:    #F4F1E8;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md:    0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --col-bg:       #F7F5EF;
+  --col-surface:  #EDEAE2;
+  --col-border:   #D2CECC;
+  --col-muted:    #B5B2AA;
+  --col-text:     #18191A;
+  --col-text-dim: #565850;
+  --col-accent:   #3F7A14;
+  --col-gold:     #9A7A10;
+  --col-white:    #18191A;
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.07);
+  --shadow-md:    0 8px 32px rgba(0,0,0,0.10);
+}
+
+/* ── Shared tokens ── */
+:root {
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+  --radius-sm:   4px;
+  --radius-md:   10px;
+  --radius-lg:   20px;
+  --radius-pill: 999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:  cubic-bezier(0.7, 0, 0.84, 0);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--col-bg);
+  color: var(--col-text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+img { display: block; max-width: 100%; }
+a   { color: inherit; text-decoration: none; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--col-bg); }
+::-webkit-scrollbar-thumb { background: var(--col-muted); border-radius: 2px; }
+
+/* ── Typography ── */
+.display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(3.8rem, 9vw, 8.5rem);
+  font-weight: 500;
+  font-style: italic;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 5.5rem);
+  font-weight: 500;
+  line-height: 0.96;
+  letter-spacing: -0.01em;
+}
+.display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+.label {
+  font-family: var(--font-body);
+  font-size: 10 rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--col-accent);
+}
+.body-lg {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.8;
+  color: var(--col-text-dim);
+  font-weight: 300;
+}
+
+/* ── Layout ── */
+.container {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 4vw, 3rem);
+}
+.section-pad { padding: clamp(5rem, 10vw, 9rem) 0; }
+
+/* ── Util ── */
+.accent { color: var(--col-accent); }
+.gold   { color: var(--col-gold); }
+
+/* ── Scroll animation ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.82rem 1.8rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.28s var(--ease-out);
+  border: none;
+}
+.btn-primary { background: var(--col-accent); color: #060707; }
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(166,224,58,0.25);
+}
+[data-theme="light"] .btn-primary { color: #fff; }
+.btn-outline { background: transparent; color: var(--col-text); border: 1px solid var(--col-border); }
+.btn-outline:hover { border-color: var(--col-accent); color: var(--col-accent); }
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--col-surface);
+  border: 1px solid var(--col-border);
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s, transform 0.35s var(--ease-out), color 0.25s;
+  color: var(--col-text-dim);
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  border-color: var(--col-accent);
+  color: var(--col-accent);
+  transform: rotate(22deg);
+}
+.theme-toggle svg {
+  width: 17px; height: 17px;
+  fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+[data-theme="dark"]  .icon-sun  { display: block; }
+[data-theme="dark"]  .icon-moon { display: none;  }
+[data-theme="light"] .icon-sun  { display: none;  }
+[data-theme="light"] .icon-moon { display: block; }
+.icon-sun  { display: block; }
+.icon-moon { display: none;  }
+
+/* ── Grain (dark only) ── */
+[data-theme="dark"] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}

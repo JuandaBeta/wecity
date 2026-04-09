@@ -1,0 +1,124 @@
+---
+// Keynotes.astro
+import { keynotes } from '../data/content.ts';
+---
+
+<section class="keynotes section-pad" id="keynotes">
+  <div class="container">
+    <div class="keynotes__header fade-up">
+      <p class="label" data-i18n="keynotes.label">Learn &amp; Transform</p>
+      <h2 class="display-lg" data-i18n="keynotes.title">
+        Generate <span class="accent">Positive</span><br/>Impact
+      </h2>
+    </div>
+
+    <div class="keynotes__grid">
+      {keynotes.map((kn, i) => (
+        <article class="keynotes__card fade-up" style={`--delay: ${i * 0.15}s`}>
+          <div class="keynotes__card-img">
+            <img src={kn.image} alt={kn.title} loading="lazy" decoding="async" />
+          </div>
+          <div class="keynotes__card-body">
+            <h3 class="keynotes__card-title" data-i18n={`keynotes.${i}.title`}>{kn.title}</h3>
+            <p class="keynotes__card-desc" data-i18n={`keynotes.${i}.desc`}>{kn.description}</p>
+            <span class="keynotes__card-cta" data-i18n="keynotes.cta">Learn more <span class="keynotes__arrow">→</span></span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .keynotes {
+    background: var(--col-surface);
+  }
+
+  .keynotes__header {
+    margin-bottom: 3.5rem;
+    max-width: 560px;
+  }
+  .keynotes__header .label { margin-bottom: 1rem; }
+
+  .keynotes__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .keynotes__card {
+    background: var(--col-bg);
+    border: 1px solid var(--col-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s, transform 0.3s var(--ease-out);
+    transition-delay: var(--delay);
+  }
+  .keynotes__card:hover {
+    border-color: var(--col-accent);
+    transform: translateY(-4px);
+  }
+
+  .keynotes__card-img {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+  .keynotes__card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .keynotes__card:hover .keynotes__card-img img { transform: scale(1.05); }
+
+  .keynotes__card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+
+  .keynotes__card-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    color: var(--col-white);
+  }
+
+  .keynotes__card-desc {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--col-text-dim);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+  }
+
+  .keynotes__card-cta {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--col-accent);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+  }
+  .keynotes__arrow {
+    transition: transform 0.2s;
+  }
+  .keynotes__card:hover .keynotes__arrow { transform: translateX(4px); }
+
+  @media (max-width: 900px) {
+    .keynotes__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 580px) {
+    .keynotes__grid { grid-template-columns: 1fr; }
+  }
+</style>

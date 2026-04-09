@@ -1,0 +1,117 @@
+---
+const partners = [
+  { name: 'Alcaldía de Medellín', logo: '/logos/AlcaldiaMedellin.png' },
+  { name: 'Ruta N', logo: '/logos/RutaN.webp' },
+  { name: 'AWS', logo: '/logos/AWS.webp' },
+  { name: 'Alcaldía de Envigado', logo: '/logos/AlcaldiaEnvigado.webp' },
+  { name: 'Alcaldía de Sabaneta', logo: '/logos/AlcaldiaSabaneta.webp' },
+  { name: 'ONU Habitat', logo: '/logos/OnuHabitat.webp' },
+];
+
+const displayPartners = [...partners, ...partners];
+---
+
+<section class="partners-section section-pad fade-up">
+  <div class="container">
+    <p class="label" data-i18n="partners.label" style="text-align: center; margin-bottom: 3rem;">
+      Network
+    </p>
+    
+    <div class="slider">
+      <div class="slide-track">
+        {displayPartners.map((p) => (
+          <div class="slide">
+            <img src={p.logo} alt={p.name} title={p.name} loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .partners-section {
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    /* Un pequeño padding para que los logos no toquen los bordes en móvil */
+    padding: 1rem 0;
+  }
+
+  .slide-track {
+    display: flex;
+    /* Ajustamos el ancho: 250px por cada logo (12 en total) */
+    width: calc(250px * 12); 
+    animation: scroll 40s linear infinite;
+  }
+
+  .slide-track:hover {
+    animation-play-state: paused;
+  }
+
+  .slide {
+    width: 250px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+  }
+
+  .slide img {
+    max-width: 100%;
+    max-height: 45px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    /* Eliminamos filtros para ver colores originales */
+    filter: none;
+    opacity: 0.9;
+    transition: transform 0.3s var(--ease-out), opacity 0.3s ease;
+  }
+
+  .slide img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 6)); }
+  }
+
+  /* Gradientes laterales que usan tu variable --col-bg para difuminar */
+  .slider::before,
+  .slider::after {
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 150px;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .slider::before {
+    left: 0;
+    background: linear-gradient(to right, var(--col-bg) 20%, transparent 100%);
+  }
+
+  .slider::after {
+    right: 0;
+    background: linear-gradient(to left, var(--col-bg) 20%, transparent 100%);
+  }
+
+  /* Ajuste para móviles */
+  @media (max-width: 768px) {
+    .slide { width: 180px; padding: 0 20px; }
+    .slide-track { width: calc(180px * 12); }
+    @keyframes scroll {
+      100% { transform: translateX(calc(-180px * 6)); }
+    }
+  }
+</style>

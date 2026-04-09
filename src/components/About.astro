@@ -1,0 +1,46 @@
+---
+// About.astro
+---
+
+<section class="about section-pad" id="about">
+  <div class="container">
+    <div class="about__inner fade-up">
+      <p class="label" data-i18n="about.label">About Us</p>
+       <p class="about__text" data-i18n="about.text">
+        At <strong>WECITY</strong>, we believe that cities are transformed when 
+        we raise our consciousness and act together under shared purpose. 
+        Companies, universities, governments, multilateral organizations, and 
+        citizens from around the world connect as a <em>single living, collective 
+        organism</em>, co-creating and implementing projects with soul that inspire 
+        and transform urban territories into more conscious and human spaces.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__inner {
+    max-width: 800px;
+  }
+  .label {
+    margin-bottom: 1.5rem;
+  }
+.about__text {
+  font-family: var(--font-display);        /* Cormorant Garamond */
+  font-size: clamp(1.4rem, 2.5vw, 2rem);  /* más grande */
+  font-weight: 300;
+  line-height: 1.75;
+  color: var(--col-text-dim);
+  font-style: normal;
+}
+
+.about__text strong {
+  color: var(--col-accent);   /* WECITY en verde */
+  font-weight: 600;
+}
+
+.about__text em {
+  font-style: italic;
+  color: var(--col-text);     /* la frase en cursiva más clara */
+}
+</style>
