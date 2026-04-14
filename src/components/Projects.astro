@@ -569,23 +569,29 @@ setInterval(() => {
   const lbBackdrop   = document.getElementById('lightboxBackdrop')!;
 
   function openLightbox(idx: number) {
-    const p = projectsData[idx];
-    if (!p) return;
-    currentLightboxIdx = idx;
-    lbImg.src         = p.image;
-    lbImg.alt         = p.title;
-    lbBadge.textContent = p.tag;
-    lbTitle.textContent = p.title;
-    lbDesc.textContent  = p.description;
+  const p = projectsData[idx];
+  if (!p) return;
+  currentLightboxIdx = idx;
 
-    const likes = getLikes();
-    const liked  = getLiked();
-    lbLikeCount.textContent = String(likes[idx] ?? 0);
-    lbLikeBtn.classList.toggle('liked', liked.has(idx));
-    lbLikeBtn.dataset.like = String(idx);
+  // Lee el texto ya traducido desde el DOM de la card
+  const card = document.querySelector<HTMLElement>(`.projects__card[data-index="${idx}"]`);
+  const translatedTitle = card?.querySelector('.projects__card-title')?.textContent?.trim() || p.title;
+  const translatedDesc  = card?.querySelector('.projects__card-desc')?.textContent?.trim()  || p.description;
 
-    lightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
+  lbImg.src               = p.image;
+  lbImg.alt               = translatedTitle;
+  lbBadge.textContent     = p.tag;
+  lbTitle.textContent     = translatedTitle;
+  lbDesc.textContent      = translatedDesc;
+
+  const likes = getLikes();
+  const liked  = getLiked();
+  lbLikeCount.textContent = String(likes[idx] ?? 0);
+  lbLikeBtn.classList.toggle('liked', liked.has(idx));
+  lbLikeBtn.dataset.like  = String(idx);
+
+  lightbox.hidden = false;
+  document.body.style.overflow = 'hidden';
   }
 
   function closeLightbox() {

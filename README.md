@@ -5,7 +5,7 @@ Sitio web de aterrizaje para **WECITY**, una plataforma de ciudades inteligentes
 🌐 **Demo en vivo:** [https://69c44a787524ab9231137b61--resonant-sorbet-377f1f.netlify.app](https://69c44a787524ab9231137b61--resonant-sorbet-377f1f.netlify.app)
 
 ---
-
+git init
 ## 🚀 Stack Tecnológico
 
 | Tecnología | Versión | Rol |
